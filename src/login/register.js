@@ -1,24 +1,30 @@
 import style from './login.module.css';
-import { useReducer, } from "react";
-import reducer, { initState } from "./reducer";
-import {addRegister, setLogin, setName, setPassword} from './action'
+import { useState, } from "react";
+
 
 function Register() {
-    const [state, dispatch] = useReducer(reducer, initState)
-    console.log(state);
-    const {name, password, use, users} = state
+    const [userData, setUserData] = useState([])
+    const [user, setUser] = useState({name:'', password:'', confimPassword:''})
     const handleRegister = () => {
-        dispatch(users(use))
+        setUserData(prev => [...prev, user])
+        setUser({name:'', password:''})
+        console.log(userData);
     }
-
+    
     return (
         <div className={style.Login}>
             <form className={style.LoginForm}>
-                <input className={style.inputLogin} type='text' value={name} onChange={e=>{dispatch(setName(e.target.value))}} placeholder="Usename"/>
-                <input className={style.inputLogin} type='password' value={password} onChange={e=>{dispatch(setPassword(e.target.value))}} placeholder="Password"/>
-                <input className={style.inputLogin} type='password' value={password} onChange={e=>{dispatch(setPassword(e.target.value))}} placeholder="Confirm password"/>
+                <input className={style.inputLogin} type='text' value={user.name} onChange={e=>{setUser({...user, name :e.target.value})}} placeholder="Usename"/>
+                <input className={style.inputLogin} type='password' value={user.password} onChange={e=>{setUser({...user, password:e.target.value})}} placeholder='Password'/>
+                <input className={style.inputLogin} type='password' value={user.confimPassword} onChange={e=>{setUser({...user, confimPassword:e.target.value})}} placeholder="Confirm password"/>
                 <button className={style.btn} onClick={handleRegister}>REGISTER</button>
             </form>
+            <div>
+                {userData.map(item =>(
+                    <li>{item.name}</li>
+                ))}
+
+            </div>
         </div>
     )
 }

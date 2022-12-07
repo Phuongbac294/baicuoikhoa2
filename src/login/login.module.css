@@ -30,9 +30,11 @@
     min-width: 75px;
     height: 25px;
     font-size: 18px;
-    line-height: 23px;
+    line-height: 21px;
     padding: 0 20px;
     border-radius: 5px;
     border-color: rgb(187, 176, 176);
     margin: 10px 0 0 0;
+    text-align: center;
+    
 }
