@@ -1,30 +1,20 @@
 import style from './login.module.css';
-import { useState, } from "react";
+import { useContext} from 'react';
+import {ShoppingCartContext} from '../context/ShoppingCartContext';
 
 
 function Register() {
-    const [userData, setUserData] = useState([])
-    const [user, setUser] = useState({name:'', password:'', confimPassword:''})
-    const handleRegister = () => {
-        setUserData(prev => [...prev, user])
-        setUser({name:'', password:''})
-        console.log(userData);
-    }
-    
+    const contai = useContext(ShoppingCartContext);
+    console.log(Object.keys(contai.value.use)[2]);
+    console.log(contai.value.useData);
     return (
-        <div className={style.Login}>
+        <div className={style.Login} >
             <form className={style.LoginForm}>
-                <input className={style.inputLogin} type='text' value={user.name} onChange={e=>{setUser({...user, name :e.target.value})}} placeholder="Usename"/>
-                <input className={style.inputLogin} type='password' value={user.password} onChange={e=>{setUser({...user, password:e.target.value})}} placeholder='Password'/>
-                <input className={style.inputLogin} type='password' value={user.confimPassword} onChange={e=>{setUser({...user, confimPassword:e.target.value})}} placeholder="Confirm password"/>
-                <button className={style.btn} onClick={handleRegister}>REGISTER</button>
+                <input className={style.inputLogin} type='text' name={Object.keys(contai.value.use)[0]} value={contai.value.use.name} onChange={contai.value.AddUser} placeholder='Usename'/>
+                <input className={style.inputLogin} type='password' name={Object.keys(contai.value.use)[1]} value={contai.value.use.password} onChange={contai.value.AddUser} placeholder='Password'/>
+                <input className={style.inputLogin} type='password' name={Object.keys(contai.value.use)[2]} value={contai.value.use.confimpassword} onChange={contai.value.AddUser} placeholder='ConfimPassword'/>
+                <button className={style.btn} onClick={contai.RegisterUser}>LOGIN</button>
             </form>
-            <div>
-                {userData.map(item =>(
-                    <li>{item.name}</li>
-                ))}
-
-            </div>
         </div>
     )
 }

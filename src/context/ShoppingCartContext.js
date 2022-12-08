@@ -1,7 +1,7 @@
 import {createContext, useContext, useState} from "react";
 import { ShoppingCart } from "../components/Shoppingcart";
 
-const ShoppingCartContext = createContext({});
+export const ShoppingCartContext = createContext({});
 
 export function useShoppingCart() {
     return useContext(ShoppingCartContext)
@@ -66,36 +66,75 @@ export function ShoppingCartProvider ({children}) {
         })
     }
 
-    {/*Phần Phương thêm vào */}
-    // const [user, setUser] = useState([
-    //     {   name : 'Quốc',
-    //         password : 'Q1234567',
-    //         email : 'quoc@gmail.com',
-    //         tel : '0912345678'
-    //     },
-    //     {   name : 'Linh',
-    //         password : 'L1234567',
-    //         email : 'linh@gmail.com',
-    //         tel : '0912345679'
-    //     },
-    //     {   name : 'Phương',
-    //         password : 'p1234567',
-    //         email : 'phuong@gmail.com',
-    //         tel : '0912345680'
-    //     }
-    // ])
-    // const [useLogin, setUseLogin] = useState({name:'', password:'',})
-    // function LoginUse(e) {
-    //     setUseLogin({
-    //         name: usename,
-    //         password: password
-    //     })
-    //     console.log(useLogin);
-    // }
- 
+   
+    const [userData, setUserData] = useState([
+        {   name : 'Quoc',
+            password : 'Q123456',
+            email : 'quoc@gmail.com',
+            tel : '0912345678'
+        },
+        {   name : 'Linh',
+            password : 'L123456',
+            email : 'linh@gmail.com',
+            tel : '0912345679'
+        },
+        {   name : 'Phuong',
+            password : 'p123456',
+            email : 'phuong@gmail.com',
+            tel : '0912345680'
+        }
+    ])
+
+    const [use, setUse] = useState({name:'', password: '', confirmPassword: '',})
+    const [login, setLogin] = useState('')
+  
+    const AddUser = (e) => {
+        const value = e.target.value;
+        const key = e.target.name;
+        setUse({
+            ...use,
+            [key]: value
+        })
+    }
+
+    const LoginUser = (e) => {
+        const name = use.name;
+        const password = use.password;
+        const arr1 = userData.filter(item => item.name === name)
+        const arr2 = arr1.filter(item => item.password === password)
+        if (arr2.length === 1) {
+            setLogin(`${name}`)
+        } else  { setLogin('Sai')}
+    }
+
+    const RegisterUser = (e) => {
+        const name = use.name;
+        const password = use.password;
+        const confimPassword = use.confirmPassword;
+        if (password === confimPassword) { 
+            if (userData.some(user => user.name === name) === false) {
+                setUserData([
+                    ...userData,
+                    use
+                ])
+            }
+        } else return false;
+
+        
+    }
+
+    const value = {
+        userData,
+        use,
+        login,
+        AddUser,
+        LoginUser,
+        RegisterUser,
+    }
+
     return(
             <ShoppingCartContext.Provider value={{getItemQuantity, increaseCartQuantity, decreaseCartQuantity, removeFromCart,
-            openCart, closeCart, cartItems,cartQuantity, }}>
+            openCart, closeCart, cartItems,cartQuantity, value}}>
                 {children}
                 <ShoppingCart isOpen={isOpen}/>
             </ShoppingCartContext.Provider>
@@ -105,4 +144,3 @@ export function ShoppingCartProvider ({children}) {
 
 
 export default ShoppingCartProvider;
-
