@@ -66,70 +66,33 @@ export function ShoppingCartProvider ({children}) {
         })
     }
 
-   
+
+    {/*Phần Phương */}
     const [userData, setUserData] = useState([
-        {   name : 'Quoc',
-            password : 'Q123456',
-            email : 'quoc@gmail.com',
-            tel : '0912345678'
-        },
-        {   name : 'Linh',
-            password : 'L123456',
-            email : 'linh@gmail.com',
-            tel : '0912345679'
-        },
-        {   name : 'Phuong',
-            password : 'p123456',
-            email : 'phuong@gmail.com',
-            tel : '0912345680'
-        }
+        {   name : 'Quốc',
+        password : '123456',
+        email : 'quoc@gmail.com',
+        tel : '0912345678'
+    },
+    {   name : 'Linh',
+        password : '123456',
+        email : 'linh@gmail.com',
+        tel : '0912345679'
+    },
+    {   name : 'Phương',
+        password : '123456',
+        email : 'phuong@gmail.com',
+        tel : '0912345680'
+    }
     ])
-
-    const [use, setUse] = useState({name:'', password: '', confirmPassword: '',})
-    const [login, setLogin] = useState('')
-  
-    const AddUser = (e) => {
-        const value = e.target.value;
-        const key = e.target.name;
-        setUse({
-            ...use,
-            [key]: value
-        })
-    }
-
-    const LoginUser = (e) => {
-        const name = use.name;
-        const password = use.password;
-        const arr1 = userData.filter(item => item.name === name)
-        const arr2 = arr1.filter(item => item.password === password)
-        if (arr2.length === 1) {
-            setLogin(`${name}`)
-        } else  { setLogin('Sai')}
-    }
-
-    const RegisterUser = (e) => {
-        const name = use.name;
-        const password = use.password;
-        const confimPassword = use.confirmPassword;
-        if (password === confimPassword) { 
-            if (userData.some(user => user.name === name) === false) {
-                setUserData([
-                    ...userData,
-                    use
-                ])
-            }
-        } else return false;
-
-        
-    }
-
+    const [userLogin, setUserLogin] = useState()
+    
     const value = {
         userData,
-        use,
-        login,
-        AddUser,
-        LoginUser,
-        RegisterUser,
+        setUserData,
+        userLogin,
+        setUserLogin
+       
     }
 
     return(

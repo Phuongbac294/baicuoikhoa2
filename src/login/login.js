@@ -1,23 +1,40 @@
 
 import style from './login.module.css';
-import { useContext} from 'react';
-import {ShoppingCartContext} from '../context/ShoppingCartContext';
+import { useState, useContext } from "react";
+import { ShoppingCartContext} from '../context/ShoppingCartContext';
 
 
 function Login() {
-    const contai = useContext(ShoppingCartContext);
-    console.log(Object.keys(contai.value.use)[2]);
-    console.log(contai.value.login);
+    const login = useContext(ShoppingCartContext)
+    const [error, setError] = useState(true)
+    const [user, setUser] = useState({name:'', password:''})
+    const arr = login.value.userData
+    const handleLogin = (event) => {
+        event.preventDefault();
+        const name = user.name;
+        const password = user.password
+        const use =arr.find(item=>(item.name===name && item.password===password))
+        console.log(use);
+        if (use === undefined) {
+            setError(false)
+        } else 
+        {   setError(true)
+            login.value.setUserLogin(use);
+            setUser({name:'', password:''})               
+        }
+    }
+
+   
     return (
-        <div className={style.Login} >
+        <div className={style.Login}>
             <form className={style.LoginForm}>
-                <input className={style.inputLogin} type='text' name={Object.keys(contai.value.use)[0]} value={contai.value.use.name} onChange={contai.value.AddUser} placeholder='Usename'/>
-                <input className={style.inputLogin} type='password' name={Object.keys(contai.value.use)[1]} value={contai.value.use.password} onChange={contai.value.AddUser} placeholder='Password'/>
-                <button className={style.btn} onClick={contai.LoginUser}>LOGIN</button>
-            </form>
+                <input className={style.inputLogin} type='text' value={user.name} onChange={e=>{setUser({...user, name :e.target.value})}} placeholder="Usename"/>
+                <input className={style.inputLogin} type='password' value={user.password} onChange={e=>{setUser({...user, password:e.target.value})}} placeholder='Password'/>   
+                {error === false && <p>Tên đăng nhập , mật khẩu sai</p>}             
+                <button className={style.btn} onClick={handleLogin}>LOGIN</button>
+            </form>           
         </div>
     )
 }
-
 
 export default Login;
