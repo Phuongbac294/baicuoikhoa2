@@ -2,9 +2,11 @@
 import style from './login.module.css';
 import { useState, useContext } from "react";
 import { ShoppingCartContext} from '../context/ShoppingCartContext';
+import { useNavigate } from "react-router-dom"
 
 
 function Login() {
+    const navigate = useNavigate()
     const login = useContext(ShoppingCartContext)
     const [error, setError] = useState(true)
     const [user, setUser] = useState({name:'', password:''})
@@ -20,7 +22,8 @@ function Login() {
         } else 
         {   setError(true)
             login.value.setUserLogin(use);
-            setUser({name:'', password:''})               
+            setUser({name:'', password:''})  
+            navigate('/store')             
         }
     }
 

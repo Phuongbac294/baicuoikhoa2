@@ -2,9 +2,10 @@ import style from './login.module.css';
 import {useState} from 'react';
 import { ShoppingCartContext} from '../context/ShoppingCartContext';
 import { useContext } from 'react';
-import {Link} from 'react-router-dom'
+import {useNavigate} from 'react-router-dom'
 
 function Register() {
+    const navigate = useNavigate()
     const Reg = useContext(ShoppingCartContext)
     const [user, setUser] = useState({name:'', password:'', confimPassword:''})
     const [register, setRegister] = useState(0)
@@ -18,6 +19,7 @@ function Register() {
                 Reg.value.setUserLogin(user)
                 setRegister(0)
                 setUser({name:'', password:'', confimPassword:''})
+                navigate('/store')
                 
             }
             else { setRegister(1) }
